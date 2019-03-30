@@ -6,41 +6,42 @@
 
 #include <Particle.h>
 
-int toggleLED(String led);
+void setup() {
+  pinMode(D7, OUTPUT);
 
-void setup()
-{
-  Particle.function("toggleLED", toggleLED);
-
-  pinMode(D0, OUTPUT);
-  pinMode(D1, OUTPUT);
-  pinMode(D2, OUTPUT);
+  Particle.subscribe("Deakin_RIOT_SIT210_Photon_Buddy", myHandler, ALL_DEVICES);
 }
 
-void loop()
-{
+
+void loop() {
 
 }
 
-void togglePin(int pin)
+void myHandler(const char *event, const char *data)
 {
-  digitalWrite(pin, !digitalRead(pin));
-}
-
-int toggleLED(String led)
-{
-  if (led == "blue")
+  if (0 == strcmp(data, "wave"))
   {
-    togglePin(D0);
+    digitalWrite(D7, HIGH);
+    delay(2000); 
+    digitalWrite(D7, LOW);
   }
-  else if (led == "green")
+  else if (0 == strcmp(data, "pat"))
   {
-    togglePin(D1);
+    digitalWrite(D7, HIGH);
+    delay(500);
+    digitalWrite(D7, LOW);
+    delay(500);
+    digitalWrite(D7, HIGH);
+    delay(500);
+    digitalWrite(D7, LOW);
+    delay(500);
+    digitalWrite(D7, HIGH);
+    delay(500);
+    digitalWrite(D7, LOW);
+    delay(500);
+    digitalWrite(D7, HIGH);
+    delay(500);
+    digitalWrite(D7, LOW);
+    delay(500);
   }
-  else if (led == "red")
-  {
-    togglePin(D2);
-  }
-
-  return 1;
 }
